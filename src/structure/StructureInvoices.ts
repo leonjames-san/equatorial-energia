@@ -1,16 +1,4 @@
-import { isObject } from "lodash";
-
-export interface iInvoicesOpen {
-    referenciaFatura: string;
-    codigoPagamento: string;
-    valorFatura: string;
-    numeroFaturaVencida: string;
-    dataVencimento: string;
-    observacao: string;
-    competencia: string;
-    mesReferencia: string;
-    negociacao: string;
-}
+import { clone } from "lodash";
 
 export interface iInvoiceDebites {
     contaContrato: string;
@@ -20,43 +8,40 @@ export interface iInvoiceDebites {
     codigo: string;
     mensagem: string;
     faturas: {
-            numeroFatura: string;
-            valor: string;
-            dataVencimento: string;
-            dataPagamento: string;
-            competencia: string;
-            codigoBarras: string;
-            notaFiscal: string;
-        }[]
+        numeroFatura: string;
+        valor: string;
+        dataVencimento: string;
+        dataPagamento: string;
+        competencia: string;
+        codigoBarras: string;
+        notaFiscal: string;
+    }[]
 
 }
 
-export type iOptionsStructureInvoices = {
-    onlyOpen?: boolean;
+type iOptionsGetInStructureInvoces = {
+    onlyInvoices?: boolean;
 }
 
 export class StructureInvoices {
     private data: iInvoiceDebites;
 
-    constructor(data: iInvoiceDebites, options: iOptionsStructureInvoices){
-        if(!isObject(options)) options = {}
-
-        if(options.onlyOpen){
-            this.data = this._extractOnlyOpen(data);
-            return;
-        }
-
+    constructor(data: iInvoiceDebites){
         this.data = data;
     }
 
-    get(){
+    get(options?: iOptionsGetInStructureInvoces){
+        if(options?.onlyInvoices)
+            return this.data.faturas;
+
         return this.data;
     }
 
-    getFirst(){
-        const _clone = this.data;
+    getFirst(options?: iOptionsGetInStructureInvoces){
+        if(options?.onlyInvoices)
+            return this.data.faturas[0];
+        const _clone = clone(this.data);
         _clone.faturas = [_clone.faturas[0]];
-
         return _clone;
     }
 
