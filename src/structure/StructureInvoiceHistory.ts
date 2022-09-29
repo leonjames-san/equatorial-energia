@@ -20,7 +20,7 @@ export interface iHistoryInvoiceDetails {
 }
 
 export class StructureInvoiceHistory {
-    public data;
+    public data: iHistoryInvoiceDetails[];
 
     constructor(data: iHistoryInvoiceDetails[]){
         this.data = data;

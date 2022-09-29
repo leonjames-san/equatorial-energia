@@ -5,6 +5,7 @@ import { Client } from '../src/client';
 import {
     StructureAccessToken,
     StructureContractDetails,
+    StructureInstallationDetails,
     StructureInvoiceHistory,
     StrucutureInvoiceOpen
 } from '../src/structure';
@@ -52,5 +53,14 @@ describe('Test Client', () => {
         expect(_history).toBeInstanceOf(StructureInvoiceHistory);
         expect(_history.findByMonth('06')?.valorConsumo).toBe('44.95 ');
         expect(_history.findByMonth('6')?.valorConsumo).toBe('44.95 ');
+    });
+
+    test('Test get installation details', async () => {
+        let _details = await controller.getInstallationDetails(new StructureAccessToken({
+            access_token: `${controller.token}`
+        }).getContractsId()[0]);
+
+        expect(_details).toBeInstanceOf(StructureInstallationDetails);
+        expect(_details.getLocation().latitude).toBe('7.354355000000-');
     });
 });
