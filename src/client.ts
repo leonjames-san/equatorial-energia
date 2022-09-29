@@ -3,11 +3,10 @@ import axios from 'axios';
 import formData from 'form-data';
 import { randomUUID } from 'node:crypto';
 import { cpf } from 'cpf-cnpj-validator';
-import lodash from 'lodash';
 
 import { apiSettings, formatingBirhtDay, formatingCpf, isBirhtDay, isObject, isString, states } from './util';
 import { ClientError, ErrorRequestParse } from './error';
-import { StructureAccessToken } from './structure';
+import { StructureAccessToken, StructureContractDetails } from './structure';
 
 type iStateAccept = "PI" | "MA" | "PA" | "AL" | "NULL";
 
@@ -141,9 +140,13 @@ export class Client {
         }
     }
 
-    async getInvoices(contract: string){
+    async getInvoices(contract: string, token: string): Promise<StructureContractDetails>
+    async getInvoices(contract: string): Promise<StructureContractDetails>
+    async getInvoices(contract: string, token?: string){
         try{
-            if(!this.token)
+            const _authorization = this.resolveTokenAuthorizationOptional(token);
+
+            if(!_authorization)
                 throw new ClientError("login required for list invoices");
 
             if(!contract)
@@ -151,11 +154,17 @@ export class Client {
 
             const { data } = await axios.get('/api/v1/debitos/' + contract, {
                 headers: {
-                    authorization: `Bearer ${this.token}`
+                    authorization: `Bearer ${_authorization}`
                 }
             });
+
+            return new StructureContractDetails(data);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
+    }
+
+    private resolveTokenAuthorizationOptional(token?: string){
+        return token ? token : this.token;
     }
 }
