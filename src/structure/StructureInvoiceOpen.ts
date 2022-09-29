@@ -12,7 +12,7 @@ export interface iInvoicesOpen {
 }
 
 export class StrucutureInvoiceOpen {
-    private data;
+    public data;
 
     constructor(data: iInvoicesOpen[]){
         this.data = data;

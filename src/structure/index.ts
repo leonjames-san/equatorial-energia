@@ -1,4 +1,5 @@
 
 export * from './StructureAccessToken';
 export * from './StructureContractDetails';
-export * from './StructureInvoiceDebts';
+export * from './StructureInvoiceOpen';
+export * from './StructureInvoiceHistory';

@@ -6,7 +6,7 @@ import { cpf } from 'cpf-cnpj-validator';
 
 import { apiSettings, formatingBirhtDay, formatingCpf, isBirhtDay, isObject, isString, states } from './util';
 import { ClientError, ErrorRequestParse } from './error';
-import { StructureAccessToken, StructureContractDetails, StrucutureInvoiceOpen } from './structure';
+import { StructureAccessToken, StructureContractDetails, StructureInvoiceHistory, StrucutureInvoiceOpen } from './structure';
 
 type iStateAccept = "PI" | "MA" | "PA" | "AL" | "NULL";
 
@@ -177,7 +177,7 @@ export class Client {
                 }
             });
 
-            return new StructureContractDetails(data.data);
+            return new StructureContractDetails(data["data"]);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
@@ -206,6 +206,28 @@ export class Client {
             });
 
             return new StrucutureInvoiceOpen(data);
+        }catch(err: any){
+            throw new ClientError(new ErrorRequestParse(err).getMessage());
+        }
+    }
+
+    async getInvoiceHistory(contract: string, token?: string){
+        try{
+            const _authorization = this.resolveTokenAuthorizationOptional(token);
+
+            if(!_authorization)
+                throw new ClientError("login required for list invoices");
+
+            if(!contract)
+                throw new ClientError("contract required");
+
+            const { data } = await axios.get("/api/v1/faturas/historico/" + contract, {
+                headers: {
+                    authorization: "Bearer " + _authorization
+                }
+            });
+
+            return new StructureInvoiceHistory(data["historicoFatura"]);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }

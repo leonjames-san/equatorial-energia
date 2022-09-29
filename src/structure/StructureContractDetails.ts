@@ -21,7 +21,7 @@ export interface iContractDetails {
 }
 
 export class StructureContractDetails {
-    private data: iContractDetails;
+    public data: iContractDetails;
 
     constructor(data: iContractDetails){
         this.data = data;
