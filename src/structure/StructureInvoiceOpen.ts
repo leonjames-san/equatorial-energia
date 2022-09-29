@@ -5,10 +5,10 @@ export interface iInvoicesOpen {
     valorFatura: string;
     numeroFaturaVencida: string;
     dataVencimento: string;
-    observacao: string;
+    observacao: string | null;
     competencia: string;
     mesReferencia: string;
-    negociacao: string;
+    negociacao: boolean;
 }
 
 export class StrucutureInvoiceOpen {
