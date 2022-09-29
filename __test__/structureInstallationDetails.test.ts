@@ -1,5 +1,5 @@
 import { beforeAll, test, describe, expect } from 'vitest';
-import { StructureInstallationDetails } from '../src/structure'
+import { StructureInstallationDetails } from '../src/structure';
 
 let controller: StructureInstallationDetails
 
