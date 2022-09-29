@@ -2,8 +2,8 @@ import { decode64 } from "../util";
 
 export interface iResponseLoginData {
     access_token: string;
-    expires_in: number;
-    token_type: string;
+    expires_in?: number;
+    token_type?: string;
 }
 
 export interface iUserDataDetailContractList {
@@ -75,5 +75,9 @@ export class StructureAccessToken {
 
     getExp(): Date{
         return this._expire;
+    }
+
+    getContractsId(): string[]{
+        return this.contasContrato.map((val: { Numero: string }) => val.Numero);
     }
 }

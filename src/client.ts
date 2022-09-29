@@ -6,7 +6,7 @@ import { cpf } from 'cpf-cnpj-validator';
 
 import { apiSettings, formatingBirhtDay, formatingCpf, isBirhtDay, isObject, isString, states } from './util';
 import { ClientError, ErrorRequestParse } from './error';
-import { StructureAccessToken, StructureContractDetails } from './structure';
+import { StructureAccessToken, StructureContractDetails, StrucutureInvoiceOpen } from './structure';
 
 type iStateAccept = "PI" | "MA" | "PA" | "AL" | "NULL";
 
@@ -24,8 +24,8 @@ export class Client {
     private options: iOptionsClient = {
         state: "NULL"
     };
-    private token?: string;
 
+    public token?: string;
     public _apiConfig;
 
     constructor(options: iOptionsClient)
@@ -107,6 +107,10 @@ export class Client {
         }
     }
 
+    /**
+     * login with date of birth
+     */
+
     async loginWithBirhtday(){
         try{
             return await this.login("birthday");
@@ -117,6 +121,10 @@ export class Client {
             throw new ClientError("unknown error");
         }
     }
+
+    /**
+     * login with document
+     */
 
     async loginWithDocument(){
         try{
@@ -129,6 +137,10 @@ export class Client {
         }
     }
 
+    /**
+     * login with mother name
+     */
+
     async loginWithMontherName(){
         try{
             return await this.login("monther-name");
@@ -139,6 +151,10 @@ export class Client {
             throw new ClientError("unknown error");
         }
     }
+
+    /**
+     * search for contract details
+     */
 
     async getDetailsContract(contract: string, token: string): Promise<StructureContractDetails>
     async getDetailsContract(contract: string): Promise<StructureContractDetails>
@@ -154,11 +170,42 @@ export class Client {
 
             const { data } = await axios.get('/api/v1/debitos/' + contract, {
                 headers: {
-                    authorization: `Bearer ${_authorization}`
+                    authorization: "Bearer " + _authorization
+                },
+                params: {
+                    listarEmAberto: false
                 }
             });
 
-            return new StructureContractDetails(data);
+            return new StructureContractDetails(data.data);
+        }catch(err: any){
+            throw new ClientError(new ErrorRequestParse(err).getMessage());
+        }
+    }
+
+    /**
+     * search for open invoices
+     */
+
+    async getInvoicesOpen(contract: string, token: string): Promise<StrucutureInvoiceOpen>
+    async getInvoicesOpen(contract: string): Promise<StrucutureInvoiceOpen>
+    async getInvoicesOpen(contract: string, token?: string){
+        try{
+            const _authorization = this.resolveTokenAuthorizationOptional(token);
+
+            if(!_authorization)
+                throw new ClientError("login required for list invoices");
+
+            if(!contract)
+                throw new ClientError("contract required");
+
+            const { data } = await axios.get("/api/v1/faturas/em-aberto/" + contract, {
+                headers: {
+                    authorization: "Bearer " + _authorization
+                }
+            });
+
+            return new StrucutureInvoiceOpen(data);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
