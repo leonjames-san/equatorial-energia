@@ -140,9 +140,9 @@ export class Client {
         }
     }
 
-    async getInvoices(contract: string, token: string): Promise<StructureContractDetails>
-    async getInvoices(contract: string): Promise<StructureContractDetails>
-    async getInvoices(contract: string, token?: string){
+    async getDetailsContract(contract: string, token: string): Promise<StructureContractDetails>
+    async getDetailsContract(contract: string): Promise<StructureContractDetails>
+    async getDetailsContract(contract: string, token?: string){
         try{
             const _authorization = this.resolveTokenAuthorizationOptional(token);
 
