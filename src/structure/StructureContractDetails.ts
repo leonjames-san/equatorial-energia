@@ -1,4 +1,5 @@
-export interface iInvoiceDebitDetails {
+
+export interface iContractDetailsInInvoiceDetails {
     numeroFatura: string;
     valor: string;
     dataVencimento: string;
@@ -8,21 +9,21 @@ export interface iInvoiceDebitDetails {
     notaFiscal: string;
 }
 
-export interface iInvoiceDebites {
+export interface iContractDetails {
     contaContrato: string;
     canalAtendimento: string;
     protocolo: any;
     totalDebitos: string;
     codigo: string;
     mensagem: string;
-    faturas: iInvoiceDebitDetails[]
+    faturas: iContractDetailsInInvoiceDetails[]
 
 }
 
 export class StructureContractDetails {
-    private data: iInvoiceDebites;
+    private data: iContractDetails;
 
-    constructor(data: iInvoiceDebites){
+    constructor(data: iContractDetails){
         this.data = data;
     }
 
@@ -40,7 +41,7 @@ export class StructureContractDetails {
         }, 0);
     }
 
-    private _extractOnlyOpen(data: iInvoiceDebites): iInvoiceDebites{
+    private _extractOnlyOpen(data: iContractDetails): iContractDetails{
         data.faturas = data.faturas.filter(val => val.dataPagamento && val.dataPagamento == "0000-00-00");
 
         return data;
