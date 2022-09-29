@@ -187,29 +187,22 @@ export class Client {
      * search for open invoices
      */
 
-    async getInvoicesOpen(contract: string, token: string): Promise<StrucutureInvoiceOpen>
-    async getInvoicesOpen(contract: string): Promise<StrucutureInvoiceOpen>
-    async getInvoicesOpen(contract: string, token?: string){
+    async getInvoicesOpen(contract: string){
         try{
-            const _authorization = this.resolveTokenAuthorizationOptional(token);
-
-            if(!_authorization)
-                throw new ClientError("login required for list invoices");
-
             if(!contract)
                 throw new ClientError("contract required");
 
-            const { data } = await axios.get("/api/v1/faturas/em-aberto/" + contract, {
-                headers: {
-                    authorization: "Bearer " + _authorization
-                }
-            });
+            const { data } = await axios.get("/api/v1/faturas/em-aberto/" + contract);
 
             return new StrucutureInvoiceOpen(data);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
     }
+
+    /**
+     * get invoice history
+     */
 
     async getInvoiceHistory(contract: string, token: string): Promise<StructureInvoiceHistory>
     async getInvoiceHistory(contract: string): Promise<StructureInvoiceHistory>
@@ -235,21 +228,16 @@ export class Client {
         }
     }
 
-    async getInstallationDetails(contract: string, token?: string){
+    /**
+     * get installation details
+     */
+
+    async getInstallationDetails(contract: string){
         try{
-            const _authorization = this.resolveTokenAuthorizationOptional(token);
-
-            if(!_authorization)
-                throw new ClientError("login required for list invoices");
-
             if(!contract)
                 throw new ClientError("contract required");
 
-            const { data } = await axios.get("/api/v1/instalacao/" + contract, {
-                headers: {
-                    authorization: "Bearer " + _authorization
-                }
-            });
+            const { data } = await axios.get("/api/v1/instalacao/" + contract);
 
             return new StructureInstallationDetails(data);
         }catch(err: any){
