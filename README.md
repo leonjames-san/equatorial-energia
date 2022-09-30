@@ -2,7 +2,7 @@
 
 <div align="center">
     <a style="text-decoration: none" href="https://www.equatorialenergia.com.br/">
-        <img src="https://play-lh.googleusercontent.com/tiksHECQh6MNAZHmW45xO38h8hJSLXYx7c5SrfzyMAvjcTQQX5Qt8XBSFV3xI4S0el3Q" alt="icone equatorial energia" width="auto" height="95" style="border-radius: 30px"/>
+        <img src="https://play-lh.googleusercontent.com/tiksHECQh6MNAZHmW45xO38h8hJSLXYx7c5SrfzyMAvjcTQQX5Qt8XBSFV3xI4S0el3Q" alt="icone equatorial energia" width="auto" height="95" />
     </a>
 </div>
 
@@ -17,12 +17,19 @@ Um modulo TypeScript que permite interagir facilmente com a API [Equatorial Ener
 -   Orientado a objecto
 -   Performático
 
+Nesse módulo, está disponível para uso os seguintes estados:
+
+-   [Alagoas](https://al.equatorialenergia.com.br/)
+-   [Maranhão](https://ma.equatorialenergia.com.br/)
+-   [Pará](https://pa.equatorialenergia.com.br/)
+-   [Piauí](https://pi.equatorialenergia.com.br/)
+
 ## Instalação
 
 -   npm
 
 ```sh
-npm install equatorial-energia
+npm install -s equatorial-energia
 ```
 
 -   yarn
@@ -77,55 +84,54 @@ client
     .catch(console.log);
 ```
 
-Uma vez instanciado o client, pode ser usado com as opções disponiveis
+Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponíveis
 
 ## Toolset
 
 **Observação** Observe que cada funcionalidade abaixo se refere a class `Client`
 
--   Client.login(username?: `string`, password?: `string`, step: `"birthday" | "document" | "monther-name"`): `Promise<StructureAccessToken>` - autentica usuario na plataforma
+-   Client.login(username?: `string`, password?: `string`, step: `"birthday" | "document" | "monther-name"`): `Promise<StructureAccessToken>` - autentica usuário na plataforma
 
--   Client.loginWithBirhtday(username?: `string`, birthday?: `string`): `Promise<StructureAccessToken>` - autentica usuario na plataforma data de nascimento
+-   Client.loginWithBirhtday(username?: `string`, birthday?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma data de nascimento
 
     ```js
     client.loginWithBirhtday("00000000000", "13/01/2022");
     ```
 
--   Client.loginWithDocument(username?: `string`, document?: `string`): `Promise<StructureAccessToken>` - autentica usuario na plataforma os primeiros digitos do RG
+-   Client.loginWithDocument(username?: `string`, document?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma os primeiros dígitos do RG
 
     ```js
     client.loginWithDocument("00000000000", "000");
     ```
 
--   Client.loginWithMontherName(username?: `string`, monther?: `string`): `Promise<StructureAccessToken>` - autentica usuario na plataforma com nome da mãe
+-   Client.loginWithMontherName(username?: `string`, monther?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com nome da mãe
 
     ```js
     client.loginWithMontherName("00000000000", "Monther Name");
     ```
 
--   Client.getDetailsContract(contract: `string`, token?: `string`): `Promise<StructureContractDetails>` - lista detalhes simples do contrato como: +10 ultimas faturas, total de debitos..
+-   Client.getDetailsContract(contract: `string`, token?: `string`): `Promise<StructureContractDetails>` - lista detalhes simples do contrato como: +10 ultimas faturas, total de débitos..
 
-    -   `token`: caso não passado o parametro, ele ira buscar por token dentro da instancia
+    -   `token`: caso não passado o parâmetro, ele ira buscar por token dentro da instância
 
     ```js
     client.getDetailsContract("000000000", "JWT");
     ```
 
--   Client.getInvoicesOpen(contract: `string`): `Promise<StrucutureInvoiceOpen>` - lista faturas não pagas, verifica se há renegociação disponivel e também disponibiliza codigo de barras para pagamento
+-   Client.getInvoicesOpen(contract: `string`): `Promise<StrucutureInvoiceOpen>` - lista fatura não pagas, verifica se há renegociação disponível e também disponibiliza código de barras para pagamento
 
-    -   Login não obrigatorio;
+    -   Login não obrigatório;
 
     ```js
     client.getInvoicesOpen("0000000000");
     ```
 
--   Client.getInvoiceHistory(contract: `string`, token?: `string`): `Promise<StructureInvoiceHistory>` - detalhes de uso da sua fatura como:
+-   Client.getInvoiceHistory(contract: `string`, token?: `string`): `Promise<StructureInvoiceHistory>` - detalhes de consumo na sua fatura como:
 
-    -   detalhamento da cobrança da fatura;
     -   uso de kwh da fatura;
     -   tributos
 
-    -   `token`: caso não passado o parametro, ele ira buscar por token dentro da instancia
+    -   `token`: caso não passado o parâmetro, ele ira buscar por token dentro da instância
 
     ```js
     client.getInvoiceHistory("0000000000", "JWT");
