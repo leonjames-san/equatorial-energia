@@ -9,13 +9,15 @@ import { ClientError, ErrorRequestParse } from './error';
 import { StructureAccessToken, StructureContractDetails, StructureInstallationDetails, StructureInvoiceHistory, StrucutureInvoiceOpen } from './structure';
 
 type iStateAccept = "PI" | "MA" | "PA" | "AL" | "NULL";
+type iLoginType = "birthday" | "document" | "monther-name";
 
 type iOptionsClient = {
     auth?: {
         username: string;
         password: string;
     },
-    state: iStateAccept
+    state: iStateAccept;
+    stepLogin?: iLoginType;
 }
 
 export class Client {
@@ -55,12 +57,24 @@ export class Client {
         axios.defaults.baseURL = `${api}`;
     }
 
-    private async login(step: "birthday" | "document" | "monther-name"){
+    private async login(username: string, password: string, state: iLoginType): Promise<StructureAccessToken>
+    private async login(step: iLoginType): Promise<StructureAccessToken>
+    private async login(username: string | iLoginType, password?: string, step?: iLoginType){
+        if(!password){
+            step = username as iLoginType;
+            username = this.username;
+            password = this.password;
+        }
+
         if(!this.username || !this.password)
             throw new ClientError("username and password required for login");
 
+        step = step ?? this.options?.stepLogin;
 
-        let typing, username = this.username, password = this.password;
+        if(!step)
+            throw new ClientError("it is necessary to fill in the login form");
+
+        let typing;
 
         if(!cpf.isValid(username))
             throw new ClientError("username invalid");
@@ -111,9 +125,9 @@ export class Client {
      * login with date of birth
      */
 
-    async loginWithBirhtday(){
+    async loginWithBirhtday(username?: string, password?: string){
         try{
-            return await this.login("birthday");
+            return await this.login(username ?? this.username, password ?? this.password, "birthday");
         }catch(err){
             if(err instanceof ClientError)
                 throw new ClientError(`[loginWithBirthday]: ${err.message}`);
@@ -126,9 +140,9 @@ export class Client {
      * login with document
      */
 
-    async loginWithDocument(){
+    async loginWithDocument(username?: string, password?: string){
         try{
-            return await this.login("document");
+            return await this.login(username ?? this.username, password ?? this.password, "document");
         }catch(err){
             if(err instanceof ClientError)
                 throw new ClientError(`[loginWithBirthday]: ${err.message}`);
@@ -141,9 +155,9 @@ export class Client {
      * login with mother name
      */
 
-    async loginWithMontherName(){
+    async loginWithMontherName(username?: string, password?: string){
         try{
-            return await this.login("monther-name");
+            return await this.login(username ?? this.username, password ?? this.password, "monther-name");
         }catch(err){
             if(err instanceof ClientError)
                 throw new ClientError(`[loginWithBirthday]: ${err.message}`);

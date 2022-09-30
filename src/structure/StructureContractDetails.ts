@@ -17,7 +17,6 @@ export interface iContractDetails {
     codigo: string;
     mensagem: string;
     faturas: iContractDetailsInInvoiceDetails[]
-
 }
 
 export class StructureContractDetails {
