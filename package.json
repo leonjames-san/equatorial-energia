@@ -2,7 +2,7 @@
   "name": "equatorial-energia",
   "description": "",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "lib/client.js",
   "license": "Apache-2.0",
   "author": "Elizandro Dantas",
   "scripts": {
