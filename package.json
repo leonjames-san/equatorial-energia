@@ -1,13 +1,29 @@
 {
   "name": "equatorial-energia",
-  "version": "1.0.0",
+  "description": "",
+  "version": "0.1.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "Apache-2.0",
+  "author": "Elizandro Dantas",
   "scripts": {
     "build": "tsc",
+    "eslint": "eslint",
+    "lint": "eslint **/*.ts --ignore-pattern node_modules/ --ignore-pattern __*__/ --ignore-pattern *.config.ts",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elizandrodantas/equatorial-energia.git"
+  },
+  "keywords": [
+    "whatsapp",
+    "whatsapp-web",
+    "api",
+    "bot",
+    "client",
+    "node"
+  ],
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/lodash": "^4.14.186",
