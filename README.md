@@ -246,7 +246,7 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
 -   Historico da fatura `StructureInvoiceHistory`
 
     ```ts
-    export interface iHistoryInvoiceDetails {
+    interface iHistoryInvoiceDetails {
         competencia: string;
         distribuicaoPercentual: string;
         distribuicaoValor: string;
@@ -266,7 +266,7 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
         valorConsumo: string;
     }
 
-    export declare class StructureInvoiceHistory {
+    declare class StructureInvoiceHistory {
         data: iHistoryInvoiceDetails[];
         constructor(data: iHistoryInvoiceDetails[]);
         get(): iHistoryInvoiceDetails[];
@@ -278,7 +278,7 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
 -   Detalhes de instalação `StructureInstallationDetails`
 
     ```ts
-    export interface iInstallationDetailsStructure {
+    interface iInstallationDetailsStructure {
         corteAndamento: string;
         desligaAndamento: string;
         faltaEnergiaAvaliacaoTecnica: string;
@@ -291,7 +291,7 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
         dadosTecnicos: iInstallationDetailsStructureTechnicalData;
     }
 
-    export interface iInstallationDetailsStructureTechnicalData {
+    interface iInstallationDetailsStructureTechnicalData {
         bomPagador: string;
         classe: string;
         fase: string;
@@ -302,12 +302,12 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
         coordenadaGeografica: iLocation;
     }
 
-    declare type iLocation = {
+    type iLocation = {
         latitude: string;
         longitude: string;
     };
 
-    export declare class StructureInstallationDetails {
+    declare class StructureInstallationDetails {
         data: iInstallationDetailsStructure;
         constructor(data: iInstallationDetailsStructure);
         get(): iInstallationDetailsStructure;
