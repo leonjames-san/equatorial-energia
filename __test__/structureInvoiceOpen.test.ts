@@ -1,11 +1,11 @@
 import { beforeAll, test, describe, expect } from 'vitest';
-import { StrucutureInvoiceOpen } from '../src/structure';
+import { InvoiceOpen } from '../src/structure';
 
-let controller: StrucutureInvoiceOpen
+let controller: InvoiceOpen
 
 describe('Structure invoice open', () => {
     beforeAll(() => {
-        controller = new StrucutureInvoiceOpen([
+        controller = new InvoiceOpen([
             {
                 "referenciaFatura": "000000000008",
                 "codigoPagamento": "0000000000000000000000000000000000000000000000",

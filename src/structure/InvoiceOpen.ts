@@ -11,7 +11,7 @@ export interface iInvoicesOpen {
     negociacao: boolean;
 }
 
-export class StrucutureInvoiceOpen {
+export class InvoiceOpen {
     public data: iInvoicesOpen[];
 
     constructor(data: iInvoicesOpen[]){

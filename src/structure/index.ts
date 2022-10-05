@@ -1,6 +1,6 @@
 
-export * from './StructureAccessToken';
-export * from './StructureContractDetails';
-export * from './StructureInvoiceOpen';
-export * from './StructureInvoiceHistory';
-export * from './StructureInstallationDetails';
+export * from './AccessToken';
+export * from './InvoiceList';
+export * from './InvoiceOpen';
+export * from './InvoiceHistory';
+export * from './InstallationDetails';

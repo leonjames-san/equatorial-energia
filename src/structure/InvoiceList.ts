@@ -19,7 +19,7 @@ export interface iContractDetails {
     faturas: iContractDetailsInInvoiceDetails[]
 }
 
-export class StructureContractDetails {
+export class InvoiceList {
     public data: iContractDetails;
 
     constructor(data: iContractDetails){

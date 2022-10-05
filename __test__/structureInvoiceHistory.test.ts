@@ -1,11 +1,11 @@
 import { beforeAll, test, describe, expect } from 'vitest';
-import { StructureInvoiceHistory } from '../src/structure';
+import { InvoiceHistory } from '../src/structure';
 
-let controller: StructureInvoiceHistory
+let controller: InvoiceHistory
 
 describe('Structure Invoice History', () => {
     beforeAll(() => {
-        controller = new StructureInvoiceHistory([
+        controller = new InvoiceHistory([
                 {
                     "competencia": "2022/09",
                     "valorConsumo": "44.95 ",

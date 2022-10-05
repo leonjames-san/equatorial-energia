@@ -14,7 +14,7 @@ export interface iUserDataDetailContractList {
     NumeroInstalacao: string;
 }
 
-export class StructureAccessToken {
+export class AccessToken {
     private _token;
     private _expire;
     public username;

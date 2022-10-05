@@ -1,11 +1,11 @@
 import { beforeAll, test, describe, expect } from 'vitest';
-import { StructureInstallationDetails } from '../src/structure';
+import { InstallationDetails } from '../src/structure';
 
-let controller: StructureInstallationDetails
+let controller: InstallationDetails
 
 describe('Structure Installation Details', () => {
     beforeAll(() => {
-        controller = new StructureInstallationDetails({
+        controller = new InstallationDetails({
             "status": "Ligada",
             "corteAndamento": "N",
             "desligaAndamento": "N",

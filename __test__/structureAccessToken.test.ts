@@ -1,10 +1,10 @@
 import { beforeAll, expect, test, describe } from 'vitest';
-import { StructureAccessToken } from '../src/structure';
+import { AccessToken } from '../src/structure';
 import { encode64 } from '../src/util';
 
 describe('Structure Access Token', () => {
     var _response,
-        controller: StructureAccessToken;
+        controller: AccessToken;
 
     beforeAll(() => {
         _response = {
@@ -43,7 +43,7 @@ describe('Structure Access Token', () => {
             expires_in: 2880000,
             token_type: "Bearer"
         }
-        controller = new StructureAccessToken(_response);
+        controller = new AccessToken(_response);
     });
 
     test('get full name', () => {

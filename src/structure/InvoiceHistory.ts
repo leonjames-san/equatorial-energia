@@ -19,7 +19,7 @@ export interface iHistoryInvoiceDetails {
     valorConsumo: string;
 }
 
-export class StructureInvoiceHistory {
+export class InvoiceHistory {
     public data: iHistoryInvoiceDetails[];
 
     constructor(data: iHistoryInvoiceDetails[]){

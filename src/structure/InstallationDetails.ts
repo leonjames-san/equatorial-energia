@@ -29,7 +29,7 @@ type iLocation = {
     longitude: string;
 }
 
-export class StructureInstallationDetails {
+export class InstallationDetails {
     public data: iInstallationDetailsStructure;
 
     constructor(data: iInstallationDetailsStructure){

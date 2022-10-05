@@ -1,12 +1,12 @@
 import { isObject } from 'lodash';
 import { beforeAll, test, describe, expect } from 'vitest';
-import { StructureContractDetails } from '../src/structure/StructureContractDetails';
+import { InvoiceList } from '../src/structure';
 
-let controller: StructureContractDetails
+let controller: InvoiceList
 
 describe('Structure Invoice Debits', () => {
     beforeAll(()=>{
-        controller = new StructureContractDetails({
+        controller = new InvoiceList({
             "contaContrato": "000000000000",
             "canalAtendimento": "A",
             "protocolo": null,

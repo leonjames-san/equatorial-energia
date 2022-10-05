@@ -6,9 +6,9 @@ import { cpf } from 'cpf-cnpj-validator';
 
 import { apiSettings, formatingBirhtDay, formatingCpf, isBirhtDay, isObject, isString, states } from './util';
 import { ClientError, ErrorRequestParse } from './error';
-import { StructureAccessToken, StructureContractDetails, StructureInstallationDetails, StructureInvoiceHistory, StrucutureInvoiceOpen } from './structure';
+import { AccessToken, InvoiceList, InstallationDetails, InvoiceHistory, InvoiceOpen } from './structure';
 
-type iStateAccept = "PI" | "MA" | "PA" | "AL" | "NULL";
+type iStateAccept = "PI" | "MA" | "PA" | "AL";
 type iLoginType = "birthday" | "document" | "monther-name";
 
 type iOptionsClient = {
@@ -16,22 +16,19 @@ type iOptionsClient = {
         username: string;
         password: string;
     },
-    state: iStateAccept;
+    state?: iStateAccept;
     stepLogin?: iLoginType;
 }
 
 export class Client {
     private username = "";
     private password = "";
-    private options: iOptionsClient = {
-        state: "NULL"
-    };
+    private options: iOptionsClient = {};
 
     public token?: string;
     public _apiConfig;
 
     constructor(options: iOptionsClient)
-    constructor(username: string, password: string)
     constructor(username: string, password: string, options: iOptionsClient)
     constructor(username: any, password?: any, options?: any){
         if(isObject(username)){
@@ -41,13 +38,13 @@ export class Client {
         } else if(isString(username)){
             this.username = username;
             this.password = password;
-            this.options = options;
+            this.options = isObject(options) ? options : {};
         }
 
-        if(!states.includes(this.options?.state))
+        if(!states.includes(this.options?.state || ""))
             throw new ClientError(`state is invalid, states accepts ${states.toString()}`);
 
-        this._apiConfig = apiSettings[this.options?.state];
+        this._apiConfig = apiSettings(this.options.state);
         const { api, api_auth } = this._apiConfig
 
         axios.defaults.headers.post = {
@@ -57,8 +54,12 @@ export class Client {
         axios.defaults.baseURL = `${api}`;
     }
 
-    private async login(username: string, password: string, state: iLoginType): Promise<StructureAccessToken>
-    private async login(step: iLoginType): Promise<StructureAccessToken>
+    /**
+     * authenticate user with api
+     */
+
+    private async login(username: string, password: string, state: iLoginType): Promise<AccessToken>
+    private async login(step: iLoginType): Promise<AccessToken>
     private async login(username: string | iLoginType, password?: string, step?: iLoginType){
         if(!password){
             step = username as iLoginType;
@@ -112,7 +113,7 @@ export class Client {
                 }
             })
 
-            const _response = new StructureAccessToken(data);
+            const _response = new AccessToken(data);
             this.token = _response.getToken();
 
             return _response;
@@ -122,7 +123,7 @@ export class Client {
     }
 
     /**
-     * login with date of birth
+     * login with cpf and date of birth
      */
 
     async loginWithBirhtday(username?: string, password?: string){
@@ -137,7 +138,7 @@ export class Client {
     }
 
     /**
-     * login with document
+     * login with cpf and document
      */
 
     async loginWithDocument(username?: string, password?: string){
@@ -152,7 +153,7 @@ export class Client {
     }
 
     /**
-     * login with mother name
+     * login with cpf and mother name
      */
 
     async loginWithMontherName(username?: string, password?: string){
@@ -167,17 +168,17 @@ export class Client {
     }
 
     /**
-     * search for contract details
+     * list invoices with contract
      */
 
-    async getDetailsContract(contract: string, token: string): Promise<StructureContractDetails>
-    async getDetailsContract(contract: string): Promise<StructureContractDetails>
-    async getDetailsContract(contract: string, token?: string){
+    async listInvoice(contract: string, token: string): Promise<InvoiceList>
+    async listInvoice(contract: string): Promise<InvoiceList>
+    async listInvoice(contract: string, token?: string){
         try{
             const _authorization = this.resolveTokenAuthorizationOptional(token);
 
             if(!_authorization)
-                throw new ClientError("login required for list invoices");
+                throw new ClientError("login required");
 
             if(!contract)
                 throw new ClientError("contract required");
@@ -191,41 +192,41 @@ export class Client {
                 }
             });
 
-            return new StructureContractDetails(data["data"]);
+            return new InvoiceList(data["data"]);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
     }
 
     /**
-     * search for open invoices
+     * open invoice details
      */
 
-    async getInvoicesOpen(contract: string){
+    async openInvoices(contract: string){
         try{
             if(!contract)
                 throw new ClientError("contract required");
 
             const { data } = await axios.get("/api/v1/faturas/em-aberto/" + contract);
 
-            return new StrucutureInvoiceOpen(data);
+            return new InvoiceOpen(data);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
     }
 
     /**
-     * get invoice history
+     * you can consult all your consumption history
      */
 
-    async getInvoiceHistory(contract: string, token: string): Promise<StructureInvoiceHistory>
-    async getInvoiceHistory(contract: string): Promise<StructureInvoiceHistory>
-    async getInvoiceHistory(contract: string, token?: string){
+    async consumpitonHistory(contract: string, token: string): Promise<InvoiceHistory>
+    async consumpitonHistory(contract: string): Promise<InvoiceHistory>
+    async consumpitonHistory(contract: string, token?: string){
         try{
             const _authorization = this.resolveTokenAuthorizationOptional(token);
 
             if(!_authorization)
-                throw new ClientError("login required for list invoices");
+                throw new ClientError("login required");
 
             if(!contract)
                 throw new ClientError("contract required");
@@ -236,24 +237,24 @@ export class Client {
                 }
             });
 
-            return new StructureInvoiceHistory(data["historicoFatura"]);
+            return new InvoiceHistory(data["historicoFatura"]);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
     }
 
     /**
-     * get installation details
+     * installation details and line conditions
      */
 
-    async getInstallationDetails(contract: string){
+    async installationDetails(contract: string){
         try{
             if(!contract)
                 throw new ClientError("contract required");
 
             const { data } = await axios.get("/api/v1/instalacao/" + contract);
 
-            return new StructureInstallationDetails(data);
+            return new InstallationDetails(data);
         }catch(err: any){
             throw new ClientError(new ErrorRequestParse(err).getMessage());
         }
