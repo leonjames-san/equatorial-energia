@@ -1,7 +1,7 @@
 {
   "name": "equatorial-energia",
   "description": "Um modulo TypeScript que permite interagir facilmente com a API Equatorial Energia",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "lib/",
   "module": "lib/",
   "license": "Apache-2.0",
@@ -42,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/elizandrodantas/equatorial-energia/issues"
   },
-  "types": "typings/",
+  "types": "typings/index.d.ts",
   "homepage": "https://github.com/elizandrodantas/equatorial-energia#readme",
   "dependencies": {
     "axios": "^0.27.2",

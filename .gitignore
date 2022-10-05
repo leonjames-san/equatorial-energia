@@ -3,3 +3,4 @@ node_modules/
 __dev__/
 lib/
 typings/
+*.log
