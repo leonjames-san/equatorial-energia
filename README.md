@@ -104,7 +104,7 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
     client.loginWithMontherName("00000000000", "Monther Name");
     ```
 
--   Client.listInvoice(contract: `string`, token?: `string`): `Promise<InvoiceList>` - lista detalhes simples do contrato como: +10 ultimas faturas, total de débitos..
+-   Client.listInvoice(contract: `string`, token?: `string`): `Promise<InvoiceList>` - lista ultimas faturas
 
     -   `token`: caso não passado o parâmetro, ele ira buscar por token dentro da instância
 
@@ -112,7 +112,7 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
     client.listInvoice("000000000", "JWT");
     ```
 
--   Client.openInvoices(contract: `string`): `Promise<InvoiceOpen>` - lista fatura não pagas, verifica se há renegociação disponível e também disponibiliza código de barras para pagamento
+-   Client.openInvoices(contract: `string`): `Promise<InvoiceOpen>` - lista fatura não pagas
 
     -   Login não obrigatório;
 
@@ -122,8 +122,8 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
 
 -   Client.consumpitonHistory(contract: `string`, token?: `string`): `Promise<InvoiceHistory>` - detalhes de consumo na sua fatura como:
 
-    -   uso de kwh da fatura;
-    -   tributos
+    1.  consumo de kwh da fatura;
+    2.  tributos.
 
     -   `token`: caso não passado o parâmetro, ele ira buscar por token dentro da instância
 
