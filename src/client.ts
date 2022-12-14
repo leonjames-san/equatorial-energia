@@ -32,8 +32,8 @@ export class Client {
     constructor(username: string, password: string, options: iOptionsClient)
     constructor(username: any, password?: any, options?: any){
         if(isObject(username)){
-            this.username = options?.auth?.username;
-            this.password = options?.auth?.password;
+            this.username = username?.auth?.username;
+            this.password = username?.auth?.password;
             this.options = username;
         } else if(isString(username)){
             this.username = username;

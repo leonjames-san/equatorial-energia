@@ -51,8 +51,8 @@ describe('Test Client', () => {
         }).getContractsId()[0]);
 
         expect(_history).toBeInstanceOf(InvoiceHistory);
-        expect(_history.findByMonth('06')?.valorConsumo).toBe('44.95 ');
-        expect(_history.findByMonth('6')?.valorConsumo).toBe('44.95 ');
+        expect(_history.findByMonth('06')?.valorConsumo).toBeTypeOf("string");
+        expect(_history.findByMonth('6')?.valorConsumo).toBeTypeOf("string");
     });
 
     test('Test get installation details', async () => {

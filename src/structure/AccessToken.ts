@@ -31,7 +31,6 @@ export class AccessToken {
 
         this._token = access_token;
 
-
         if(this._token.split('.').length !== 3)
             throw new Error("access token invalid");
 
