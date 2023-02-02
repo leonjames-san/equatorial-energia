@@ -14,7 +14,7 @@ const { CPFWithPointer, BIRHTDAY } = process.env;
 
 let controller: Client;
 
-describe('Test Client', () => {
+describe('Test Client [PF]', () => {
     beforeAll(() => {
         controller = new Client(`${CPFWithPointer}`, `${BIRHTDAY}`, {
             state: "PI"
