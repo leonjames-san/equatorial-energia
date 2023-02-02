@@ -2,7 +2,6 @@
 import axios from 'axios';
 import formData from 'form-data';
 import { randomUUID } from 'node:crypto';
-import { cpf } from 'cpf-cnpj-validator';
 
 import { apiSettings, formatingBirhtDay, formatingDocument, isBirhtDay, isObject, isString, states } from './util';
 import { ClientError, ErrorRequestParse } from './error';
