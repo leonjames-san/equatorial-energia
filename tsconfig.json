@@ -9,6 +9,7 @@
         "ES2022"
     ],
     "moduleResolution": "node",
+    "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "rootDir": "src/",
     "outDir": "lib/",
