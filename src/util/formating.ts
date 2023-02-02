@@ -7,8 +7,8 @@ export function formatingBirhtDay(birthday: string){
     return `${_s[2]}-${_s[1]}-${_s[0]}`;
 }
 
-export function formatingCpf(cpf: string){
-    return cpf.split('.').join('').split('-').join('');
+export function formatingDocument(cpf: string){
+    return cpf.replace(/\.|\/|-/gm, '');
 }
 
 export function formatingTrimObject<T>(object: any): T{
