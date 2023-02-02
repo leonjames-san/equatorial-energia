@@ -84,21 +84,25 @@ Uma vez instanciado o client, pode ser usado conjunto de ferramentas disponívei
 
 **Observação** Observe que cada funcionalidade abaixo se refere a class `Client`
 
--   Client.login(username?: `string`, password?: `string`, step: `"birthday" | "document" | "monther-name"`): `Promise<StructureAccessToken>` - autentica usuário na plataforma
-
--   Client.loginWithBirhtday(username?: `string`, birthday?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com cpf e data de nascimento
+-   Client.loginWithBirhtday(cpf?: `string`, birthday?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com cpf e data de nascimento
 
     ```js
     client.loginWithBirhtday("00000000000", "13/01/2022");
     ```
 
--   Client.loginWithDocument(username?: `string`, document?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com cpf e primeiros dígitos do RG
+-   Client.loginWithDocument(cpf?: `string`, document?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com cpf e primeiros dígitos do RG
 
     ```js
     client.loginWithDocument("00000000000", "000");
     ```
 
--   Client.loginWithMontherName(username?: `string`, monther?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com cpf e nome da mãe
+-   Client.loginWithCnpj(cnpj?: `string`, email?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com cnpj e o email cadastrado
+
+    ```js
+    client.loginWithCnpj("00000000000000", "email@elizandrodantas.com");
+    ```
+
+-   Client.loginWithMontherName(cpf?: `string`, monther?: `string`): `Promise<StructureAccessToken>` - autentica usuário na plataforma com cpf e nome da mãe
 
     ```js
     client.loginWithMontherName("00000000000", "Monther Name");
